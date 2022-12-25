@@ -10,6 +10,7 @@ template.innerHTML = `
   <slot></slot>
 `;
 
+
 customElements.define('search-group', class SuperSpan extends HTMLFormElement   {
   $(selector) {
     return this.shadowRoot && this.shadowRoot.querySelector(selector)
@@ -20,11 +21,20 @@ customElements.define('search-group', class SuperSpan extends HTMLFormElement   
     this.addEventListener('submit', this.mySubmit);
   }
 
+  set op(value){
+    this._op = value
+    this.setAttribute('op', value)
+  }
+
+  get op(){
+    return this.getAttribute('op')
+  }
+
   mySubmit(e) {
     e.preventDefault()
     console.log('mySubmit was called');
     const formData = new FormData(this)
-    formData.append("op", this.getAttribute("op"))
+    formData.append("op", this.op)
     const params = new URLSearchParams(formData)
     console.log(params)
     e.target.submit()
@@ -34,20 +44,7 @@ customElements.define('search-group', class SuperSpan extends HTMLFormElement   
     console.log('Custom form element added to page.');
   }
 
-  // constructor() {
-  //   super()
-
-  //   const root = this.attachShadow({mode: 'open'})
-  // root.appendChild(template.content.cloneNode(true))
-  //  this.shadowRoot.getElementById("op-slot").setAttribute('value', this.getAttribute("op"))
-  //   // this.querySelectorAll("search-input").forEach(child => console.log(child));
-  // }
-
   connectedCallback() {
-    // const slot = this.$('slot')
-    // const [node] = slot.assignedNodes()
-    // this.setAttribute('aria-label', node.textContent)
-    // node.textContent = '⭐️'
   }
 }, { extends: 'form' });
 
@@ -65,12 +62,7 @@ constructor() {
 
   connectedCallback() {
     console.log(this.parentElement.getAttribute("op"))
-    // const slot = this.$('slot')
-    // const [node] = slot.assignedNodes()
 
   }
 
-  shine(event) {
-    this.$('span').animate(keyframes, options)
-  }
 }, { extends: 'input' });
