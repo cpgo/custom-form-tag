@@ -10,21 +10,38 @@ template.innerHTML = `
   <slot></slot>
 `;
 
-customElements.define('search-group', class SuperSpan extends HTMLElement {
-
+customElements.define('search-group', class SuperSpan extends HTMLFormElement   {
   $(selector) {
     return this.shadowRoot && this.shadowRoot.querySelector(selector)
   }
 
   constructor() {
-    super()
-    this.shine = this.shine.bind(this)
-    const root = this.attachShadow({mode: 'open'})
-          root.appendChild(template.content.cloneNode(true))
-    // this.addEventListener('click', this.shine)
-    // this.addEventListener('mouseover', this.shine)
-    this.querySelectorAll("search-input").forEach(child => console.log(child));
+    super();
+    this.addEventListener('submit', this.mySubmit);
   }
+
+  mySubmit(e) {
+    e.preventDefault()
+    console.log('mySubmit was called');
+    const formData = new FormData(this)
+    formData.append("op", this.getAttribute("op"))
+    const params = new URLSearchParams(formData)
+    console.log(params)
+    e.target.submit()
+  }
+
+  connectedCallback() {
+    console.log('Custom form element added to page.');
+  }
+
+  // constructor() {
+  //   super()
+
+  //   const root = this.attachShadow({mode: 'open'})
+  // root.appendChild(template.content.cloneNode(true))
+  //  this.shadowRoot.getElementById("op-slot").setAttribute('value', this.getAttribute("op"))
+  //   // this.querySelectorAll("search-input").forEach(child => console.log(child));
+  // }
 
   connectedCallback() {
     // const slot = this.$('slot')
@@ -32,39 +49,7 @@ customElements.define('search-group', class SuperSpan extends HTMLElement {
     // this.setAttribute('aria-label', node.textContent)
     // node.textContent = '⭐️'
   }
-
-  shine(event) {
-    this.$('span').animate(keyframes, options)
-  }
-});
-
-
-// class TB extends HTMLInputElement {
-//   static get observedAttributes() { return ['value'] }
-
-//   constructor() {
-//       super()
-//       this.addEventListener( 'input', () => this.setAttribute( 'value', super.value ) )
-//   }
-
-//   attributeChangedCallback(name, oldValue, newValue) {
-//       this.value = newValue
-//   }
-
-//   get value() { return super.value }
-
-//   set value( val ) {
-//       super.value = val
-//       if ( val != this.getAttribute( 'value' ) )
-//           this.setAttribute( 'value', val )
-//   }
-// }
-
-
-// customElements.define( 'search-input', TB, { extends: 'input' } )
-
-
-
+}, { extends: 'form' });
 
 customElements.define('search-input', class SuperSpan extends HTMLInputElement {
 
@@ -79,7 +64,7 @@ constructor() {
 
 
   connectedCallback() {
-    console.log(this)
+    console.log(this.parentElement.getAttribute("op"))
     // const slot = this.$('slot')
     // const [node] = slot.assignedNodes()
 

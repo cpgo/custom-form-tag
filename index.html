@@ -13,15 +13,14 @@
     }
   </style>
 
-  <form action="/index.html" method="get">
-    <search-group op="or">
-      <input is="search-input" op="eq" value="" name="name">
-      <input is="search-input" op="gt" value="" name="price">
-    </search-group>
+
+
+  <form action="/index.html" method="get" is="search-group" op="or">
+    <input is="search-input" op="eq" value="" name="name">
+    <input is="search-input" op="gt" value="" name="price">
     <input type="thing" name="raw">
     <button type="submit">Save</button>
   </form>
   <script src="./index.js"></script>
 </body>
 </html>
-
