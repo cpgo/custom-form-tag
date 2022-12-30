@@ -1,6 +1,6 @@
 export class SearchInput extends HTMLInputElement {
 
-  $(selector) {
+  $(selector: string) {
     return this.shadowRoot && this.shadowRoot.querySelector(selector)
   }
 
@@ -8,11 +8,5 @@ export class SearchInput extends HTMLInputElement {
 constructor() {
 	super();
 }
-
-
-  connectedCallback() {
-    console.log(this.parentElement.getAttribute("op"))
-
-  }
 
 }
