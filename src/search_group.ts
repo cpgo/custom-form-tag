@@ -24,9 +24,12 @@ export class SearchGroup extends HTMLFormElement   {
     return attr
   }
 
-  mySubmit(e : Event) {
+  get inputs() {
+    return this.querySelectorAll("input[is='search-input']")
+  }
+
+  mySubmit(e: Event) {
     e.preventDefault()
-    console.log('mySubmit was called');
     const formData = new FormData(this)
     formData.append("op", this.op)
     const convertedFormEntries = Array.from(
@@ -37,6 +40,7 @@ export class SearchGroup extends HTMLFormElement   {
     );
     const params = new URLSearchParams(convertedFormEntries)
     console.log(params)
+    console.log(this.inputs);
 
     if (!e.currentTarget) {
       throw new Error("No event target");
