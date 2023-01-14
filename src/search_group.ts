@@ -1,8 +1,4 @@
 export class SearchGroup extends HTMLFormElement   {
-  $(selector : string) {
-    return this.shadowRoot && this.shadowRoot.querySelector(selector)
-  }
-
   constructor() {
     super();
     this.addEventListener('submit', this.mySubmit);
